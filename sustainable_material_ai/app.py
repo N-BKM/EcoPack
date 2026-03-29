@@ -15,7 +15,7 @@ from contextlib import contextmanager
 
 def get_db_connection():
     # Render and Heroku automatically provide this environment variable
-    DATABASE_URL = os.environ.get('DATABASE_URL')
+    DATABASE_URL = os.environ.get('postgresql://ecopack_db_b8t2_user:ujJCt9ZjQmw8er5IZj4QQc4LtIA08ts8@dpg-d74mogggjchc73bapt80-a/ecopack_db_b8t2')
     
     if DATABASE_URL:
         # This runs when your app is LIVE on the internet
