@@ -14,14 +14,14 @@ from contextlib import contextmanager
 # --- UPDATED DATABASE LOGIC FOR MILESTONE 4 ---
 
 def get_db_connection():
-    # Render and Heroku automatically provide this environment variable
     DATABASE_URL = os.environ.get('DATABASE_URL')
-    
     if DATABASE_URL:
-        # This runs when your app is LIVE on the internet
+        # MANDATORY: Render gives 'postgres://', but Python needs 'postgresql://'
+        if DATABASE_URL.startswith("postgres://"):
+            DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
         return psycopg2.connect(DATABASE_URL, sslmode='require')
     else:
-        # This runs when you are testing on your LOCAL LAPTOP
+        # Your local laptop settings
         return psycopg2.connect(
             host="localhost",
             database="sustainable_materials_db",
@@ -29,6 +29,7 @@ def get_db_connection():
             password="nandhu2006", 
             port="5432"
         )
+
 
 @contextmanager
 def get_db_cursor():
